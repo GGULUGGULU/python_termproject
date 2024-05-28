@@ -44,7 +44,7 @@ def update_parking_areas(event):
         combobox2.set("구역을 고르세요")
         
 def update_parking_information(event):
-    pass
+    parking_area_name.set(combobox2.get())
 
 def update_clock():
     current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -69,6 +69,19 @@ airport_codes = {
     'CJJ': 'CJJ-청주국제공항',
     'ICN': 'ICN-인천국제공항'
 }
+#전역변수는 라벨텍스트 변경용
+global parking_area_name    #주차장 이름
+global parking_area_full_rate   #주차장 만차율
+global parking_area_count   #주차장 총 자리수
+global parking_area_available_count     #주차가능 자리수
+global parking_area_fee     #주차요금
+
+parking_area_name = StringVar()
+parking_area_full_rate = StringVar()
+parking_area_count = StringVar()
+parking_area_available_count = StringVar()
+parking_area_fee = StringVar()
+
 
 clock_label=Label(window, font=('Arial', 15))#현재시간
 clock_label.pack(anchor='ne')#현재시간 위치
@@ -90,10 +103,11 @@ combobox2.set("구역을 고르세요")
 combobox2.bind("<<ComboboxSelected>>", update_parking_information)
 combobox2.place(x=0, y=400)
 
-parking_area_case = Label(window, text='주차장 이름: \n\n만차율: \n\n총 주차가능 수: \n\n주차된 차량 수: \n\n주차가능 차량 수: \n\n주차요금: ', font=15)
+parking_area_case = Label(window, text='주차장 이름: \n\n만차율: \n\n주차장 총 자리수: \n\n주차된 차량 수: \n\n주차가능 자리 수: \n\n주차요금: ', font=15)
 parking_area_case.place(x=200, y=300)
 
-parking_area_information = Label(window, textvariable="1",font=15)
+parking_area_information = Label(window, font=15)
+parking_area_information['textvariable']=parking_area_name
 parking_area_information.place(x=350,y=300)
 
 window.mainloop()
