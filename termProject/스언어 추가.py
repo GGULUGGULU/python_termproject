@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
-import requests
-from xml.etree import ElementTree
-
+from datetime import datetime
 import requests
 from xml.etree import ElementTree
 
@@ -22,6 +20,7 @@ def update_parking_areas(event):
     react2 = requests.get(url2, params=params2)
 
     parking_areas = []
+    
 
     if react1.status_code == 200:
         root1 = ElementTree.fromstring(react1.content)
@@ -43,8 +42,15 @@ def update_parking_areas(event):
     else:
         combobox2['values'] = parking_areas
         combobox2.set("구역을 고르세요")
+        
+def update_parking_information(event):
+    pass
 
-
+def update_clock():
+    current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    clock_label.config(text=current_time)
+    clock_label.after(1000, update_clock)
+    
 window = Tk()
 window.title("주차장 현황")
 window.geometry("800x600")
@@ -64,6 +70,10 @@ airport_codes = {
     'ICN': 'ICN-인천국제공항'
 }
 
+clock_label=Label(window, font=('Arial', 15))#현재시간
+clock_label.pack(anchor='ne')#현재시간 위치
+update_clock()#실시간 업데이트
+
 label=Label(window, text="실시간 공항주차 시스템", font=(20))
 label.pack()
 
@@ -72,11 +82,18 @@ combobox1.config(state='readonly')
 combobox1['values'] = list(airport_codes.values())
 combobox1.set("공항을 고르세요")
 combobox1.bind("<<ComboboxSelected>>", update_parking_areas)
-combobox1.pack(side="left")
+combobox1.place(x=0, y=300)
 
 combobox2 = Combobox(window, height=15)
 combobox2.config(state='readonly')
 combobox2.set("구역을 고르세요")
-combobox2.pack(side="left")
+combobox2.bind("<<ComboboxSelected>>", update_parking_information)
+combobox2.place(x=0, y=400)
+
+parking_area_case = Label(window, text='주차장 이름: \n\n만차율: \n\n총 주차가능 수: \n\n주차된 차량 수: \n\n주차가능 차량 수: \n\n주차요금: ', font=15)
+parking_area_case.place(x=200, y=300)
+
+parking_area_information = Label(window, textvariable="1",font=15)
+parking_area_information.place(x=350,y=300)
 
 window.mainloop()
