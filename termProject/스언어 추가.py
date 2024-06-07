@@ -20,7 +20,7 @@ def update_parking_areas(event):
     react2 = requests.get(url2, params=params2)
 
     parking_areas = []
-    
+
 
     if react1.status_code == 200:
         root1 = ElementTree.fromstring(react1.content)
@@ -42,7 +42,7 @@ def update_parking_areas(event):
     else:
         combobox2['values'] = parking_areas
         combobox2.set("구역을 고르세요")
-        
+
 def update_parking_information(event):
     parking_area_name.set(combobox2.get())
 
@@ -50,7 +50,7 @@ def update_clock():
     current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     clock_label.config(text=current_time)
     clock_label.after(1000, update_clock)
-    
+
 window = Tk()
 window.title("주차장 현황")
 window.geometry("800x600")
@@ -96,6 +96,7 @@ combobox1['values'] = list(airport_codes.values())
 combobox1.set("공항을 고르세요")
 combobox1.bind("<<ComboboxSelected>>", update_parking_areas)
 combobox1.place(x=0, y=300)
+
 
 combobox2 = Combobox(window, height=15)
 combobox2.config(state='readonly')
