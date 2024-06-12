@@ -187,6 +187,12 @@ def display_parking_info(event):
         'T1 장기 P1 주차타워':'37.446667, 126.455281',
         'T1 장기 P2 주차타워':'37.445329, 126.455273',
         #------인천------
+        '여객주차장':'34.99362514,126.3895907',
+        #------무안------
+        '여객주차창':'35.09291434,128.0872057',
+        #------사천------
+        '여객주차장':'38.05794534,128.6622425'
+        #------양양------
     }
     
     if selected_area in parking_areas:
@@ -195,7 +201,7 @@ def display_parking_info(event):
         remaining_space = info['remaining_space']
         if total_space.isdigit() and remaining_space.isdigit():
             remaining_parking_space = int(total_space) - int(remaining_space)
-            parking_rate = fulloccupancyrate.calculate(int(total_space), remaining_parking_space)
+            parking_rate = fulloccupancyrate.calculate(int(total_space),int(remaining_space))
 
             label_info.config(text=f"주차 구역: {selected_area}\n\n총 주차 공간: {total_space} 대\n\n사용 중인 주차 공간: {remaining_space} 대\n\n남은 주차 공간: {remaining_parking_space} 대\n\n만차율: {parking_rate:.2f}%")
         else:
@@ -209,14 +215,29 @@ def display_parking_info(event):
         if combobox2.get() == "여객주차장":
             if combobox1.get() =="TAE-대구국제공항":
                 combo_search('35.8993791,128.637196')
+                return
             elif combobox1.get() =="RSU-여수공항":
                 combo_search('34.8400345,127.6132359')
+                return
             elif combobox1.get() =="USN-울산공항":
                 combo_search('35.5940067,129.3564615')
+                return
             elif combobox1.get() =="KUV-군산공항":
                 combo_search('35.9267451,126.6157272')
+                return
             elif combobox1.get() =="WJU-원주공항":
                 combo_search('37.4588026,127.977656')
+                return
+            elif combobox1.get() =="MWX-무안국제공항":
+                combo_search('37.4588026,127.977656')
+                return
+            elif combobox1.get() =="HIN-사천공항":
+                combo_search('35.09291434,128.0872057')
+                return
+            elif combobox1.get() =="YNY-양양국제공항":
+                combo_search('38.05794534,128.6622425')
+                return
+                
             
         if combobox2.get() in latNlon:
             combo_search(latNlon[combobox2.get()])
@@ -239,7 +260,7 @@ def update_body():
 
         if total_space.isdigit() and remaining_space.isdigit():
             remaining_parking_space = int(total_space) - int(remaining_space)
-            parking_rate = fulloccupancyrate.calculate(int(total_space), remaining_parking_space)
+            parking_rate = fulloccupancyrate.calculate(int(total_space),int(remaining_space))
 
             body = f"공항: {combobox1.get()}\n\n주차 구역: {selected_area}\n\n총 주차 공간: {total_space} 대\n\n사용 중인 주차 공간: {remaining_space} 대\n\n남은 주차 공간: {remaining_parking_space} 대\n\n만차율: {parking_rate:.2f}%"
         else:
@@ -503,6 +524,12 @@ def bookmark_display_parking_info():
         'T1 장기 P1 주차타워':'37.446667, 126.455281',
         'T1 장기 P2 주차타워':'37.445329, 126.455273',
         #------인천------
+        '여객주차장':'34.99362514,126.3895907',
+        #------무안------
+        '여객주차창':'35.09291434,128.0872057',
+        #------사천------
+        '여객주차장':'38.05794534,128.6622425'
+        #------양양------
     }
 
     if selected_area in parking_areas:
@@ -533,6 +560,12 @@ def bookmark_display_parking_info():
                 combo_search('35.9267451,126.6157272')
             elif combobox1.get() =="WJU-원주공항":
                 combo_search('37.4588026,127.977656')
+            elif combobox1.get() =="MWX-무안국제공항":
+                combo_search('37.4588026,127.977656')
+            elif combobox1.get() =="HIN-사천공항":
+                combo_search('35.09291434,128.0872057')
+            elif combobox1.get() =="YNY-양양국제공항":
+                combo_search('38.05794534,128.6622425')
 
         if combobox2.get() in latNlon:
             combo_search(latNlon[combobox2.get()])
@@ -666,6 +699,9 @@ airport_codes = {
     'KUV': 'KUV-군산공항',
     'WJU': 'WJU-원주공항',
     'CJJ': 'CJJ-청주국제공항',
+    'MWX': 'MWX-무안국제공항',
+    'HIN': 'HIN-사천공항',
+    'YNY': 'YNY-양양국제공항',
     'ICN': 'ICN-인천국제공항'
 }
 
